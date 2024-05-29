@@ -17,6 +17,13 @@ function hasProperty(obj, propName) {
 }
 console.log(hasProperty(user, 'sex')) //false
 console.log(hasProperty(user, 'age')) //true
+// 2 вариант решения задачи: 
+
+const checkProperty = (obj, prop) =>  obj[prop] ? true : false;
+
+console.log(checkProperty({ age: 29 }, 'age')); // true
+console.log(checkProperty({ age: 29 }, 'firstname')); // false
+console.log(checkProperty({ age: 29 }, 'city')); // false
 
 // 3. Изменение свойства объекта: Напишите код, который изменяет значение свойства age объекта person на новое значение.
 

@@ -1,0 +1,110 @@
+use DataBase22_10
+switched to db DataBase22_10
+
+1. Создать коллекцию users и заполнить документами (4 штуки) со следующими свойствами (id, name, age, gender). 
+
+В самой программе прописываем:
+    db.users.insertMany ([
+    { id: 1, name: "Анатолий", age: 28, gender: "m" },
+    { id: 2, name: "Светлана", age: 25, gender: "f" },
+    { id: 3, name: "Никита", age: 33, gender: "m" },
+    { id: 4, name: "Ольга", age: 22, gender: "f" }
+    ])
+В ответ получаем: 
+    {
+  acknowledged: true,
+  insertedIds: {
+        '0': ObjectId('6717d663de4bf6d6b9ac0b58'),
+        '1': ObjectId('6717d663de4bf6d6b9ac0b59'),
+        '2': ObjectId('6717d663de4bf6d6b9ac0b5a'),
+        '3': ObjectId('6717d663de4bf6d6b9ac0b5b')
+        }
+    }
+
+2. Вывести данные о всех представительницах женского пола
+В самой программе прописываем:
+    db.users.find({gender: 'f'})
+
+В ответ получаем: 
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b59'),
+  id: 2,
+  name: 'Светлана',
+  age: 25,
+  gender: 'f'
+}
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5b'),
+  id: 4,
+  name: 'Ольга',
+  age: 22,
+  gender: 'f'
+}
+
+3. Вывести данные о всех представительницах женского пола и людях старше 30 лет
+db.users.find({
+    $or: [
+        { gender: "f" },
+        { age: { $gt: 30 } }
+        ]
+        })
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b59'),
+  id: 2,
+  name: 'Светлана',
+  age: 25,
+  gender: 'f'
+}
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5a'),
+  id: 3,
+  name: 'Никита',
+  age: 33,
+  gender: 'm'
+}
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5b'),
+  id: 4,
+  name: 'Ольга',
+  age: 22,
+  gender: 'f'
+}
+
+4. Вывести всех пользователей, у которых имя входит в список (Анатолий, Дмитрий, Ольга, Семен)
+db.users.find({
+    name: { $in: ["Анатолий", "Дмитрий", "Ольга", "Семен"] }})
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b58'),
+  id: 1,
+  name: 'Анатолий',
+  age: 28,
+  gender: 'm'
+}
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5b'),
+  id: 4,
+  name: 'Ольга',
+  age: 22,
+  gender: 'f'
+}
+
+5.   Вывести пользователя с идентификатором 3
+db.users.find({ id: 3 })
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5a'),
+  id: 3,
+  name: 'Никита',
+  age: 33,
+  gender: 'm'
+}
+
+6. Вывести пользователей в возрасте от 30 до 40 (включая концы)
+
+db.users.find({age: { $gte: 30, $lte: 40 }})
+{
+  _id: ObjectId('6717d663de4bf6d6b9ac0b5a'),
+  id: 3,
+  name: 'Никита',
+  age: 33,
+  gender: 'm'
+}
